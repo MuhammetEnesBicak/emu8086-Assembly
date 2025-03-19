@@ -1,0 +1,25 @@
+;the program determines wheter a given number is perfect square or not
+org 100h
+mov cx,900d
+mov di,1
+
+take_sqr:
+
+mov ax,di
+mov bx,di
+mul bx
+cmp ax,cx
+jz END
+INC DI
+CMP DI,CX
+JZ not_square
+jmp take_sqr
+
+END:
+
+MOV DX,CX
+HLT
+
+not_square:
+mov dx, 0xffff
+hlt
