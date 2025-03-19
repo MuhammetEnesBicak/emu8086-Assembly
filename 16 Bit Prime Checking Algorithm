@@ -1,0 +1,29 @@
+org 100h 
+MOV AX,10007d ; move AX whatever value that we interested in
+MOV CX,2d   ; dividings start with 2 
+MOV BX,AX   ; keep org. AX value in BX to retrieve.
+
+CMP AX,2d   ;if AX=2 then go to the prime label
+JZ  prime 
+CMP AX,1    ;if AX=1 then go to the non-prime label
+JZ  non_prime
+
+divide:
+MOV AX,BX
+DIV CX          ; make AX/CX. 
+CMP DX,0        ; if there is a reminder move on
+JZ  non_prime
+MOV DX,0        ; reinitialize DX
+INC CX          ; increment counter
+;MOV AX,BX       ; retrieve org value of AX
+CMP CX,AX       ; CX<= AX   -> go back to divide 
+JNG divide
+;JNZ divide
+
+prime:
+MOV DX,BX
+hlt
+
+non_prime:
+MOV DX,0xFFFF
+hlt
